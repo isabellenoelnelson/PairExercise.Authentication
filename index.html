@@ -74,8 +74,14 @@
 								authorization: token,
 							},
 						});
+
 						const notes = await axios.get(
-							`/api/users/${response.data.id}/notes`
+							`/api/users/${response.data.id}/notes`,
+							{
+								headers: {
+									authorization: token,
+								},
+							}
 						);
 
 						this.setState({ auth: response.data, notes: notes.data });
@@ -91,7 +97,8 @@
 					this.attemptTokenLogin();
 				}
 				render() {
-					const { auth, notes } = this.state;
+					const { auth } = this.state;
+					const { notes } = this.state || [];
 					const { signIn, logout } = this;
 					if (!auth.id) {
 						return <SignIn signIn={signIn} />;
